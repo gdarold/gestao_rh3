@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'apps.funcionarios',
     'apps.registro_hora_extra',
     'apps.core',
+    'bootstrapform',
 
 ]
 
@@ -128,8 +129,16 @@ STATIC_URL = '/static/'
 
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "static"),
+    os.path.join(BASE_DIR, "staticfiles"),
 ]
+
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
+
+LOGIN_REDIRECT_URL = 'home'
+
+MEDIA_URL = '/media/'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 LOGIN_REDIRECT_URL = 'home'
 
