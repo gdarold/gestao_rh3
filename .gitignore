@@ -3,7 +3,7 @@
 venv
 *.pyc
 gestao_rh/__pycache__/
-static
+
 gestao_rh.pem
 media
 uwsgi.ini
