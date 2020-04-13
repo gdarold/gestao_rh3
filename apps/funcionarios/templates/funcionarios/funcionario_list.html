@@ -11,4 +11,8 @@
     <br>
     {% endfor %}
     <a href="{% url 'create_funcionarios' %}" class="btn btn-primary">Novo</a>
+    <a href="{% url 'relatorio_funcionarios'%}" class="btn btn-info">Gerar PDF Funcionarios</a>
+    <a href="{% url 'relatorio_funcionarios_html'%}" class="btn btn-info">Gerar PDF Funcionarios html</a>
+    <a href="{% url 'relatorio_funcionarios_html_debug'%}" class="btn btn-danger">Gerar PDF Funcionarios html</a>
+
 {% endblock %}
