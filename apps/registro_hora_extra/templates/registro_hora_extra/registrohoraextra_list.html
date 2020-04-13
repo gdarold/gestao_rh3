@@ -17,5 +17,7 @@ Banco de horas
         <h2>Não existem registros de horas no banco de dados</h2>
     {% endif %}
      <a href="{% url 'create_hora_extra' %}" class="btn btn-primary">Novo registro</a>
-     <a href="{% url 'exportar_csv' %}" class="btn btn-primary">Csv</a>
+     <a href="{% url 'exportar_csv' %}" class="btn btn-primary">Exportar Csv</a>
+     <a href="{% url 'exportar_excel' %}" class="btn btn-primary">Exportar Excel</a>
+
 {% endblock %}
