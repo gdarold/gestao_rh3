@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'apps.core',
     'bootstrapform',
     'rest_framework',
+    'rest_framework.authtoken',
 
 ]
 

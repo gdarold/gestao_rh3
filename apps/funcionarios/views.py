@@ -126,3 +126,5 @@ class Pdf(View):
 
 class PdfDebug(TemplateView):
     template_name = 'funcionarios/relatorio.html'
+
+
