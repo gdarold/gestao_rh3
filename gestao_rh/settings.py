@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'apps.funcionarios',
     'apps.registro_hora_extra',
     'apps.core',
+    'apps.appantiga',
     'bootstrapform',
     'rest_framework',
     'rest_framework.authtoken',
@@ -91,6 +92,10 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    },
+    'antigo':{
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'dbantigo.sqlite3'),
     }
 }
 
@@ -163,3 +168,5 @@ EMAIL_HOST_PASSWORD = 'gabi2308'
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
+
+DATABASE_ROUTERS = ['gestao_rh.DBRoutes.DBRoutes']
