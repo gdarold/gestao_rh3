@@ -167,8 +167,8 @@ LANGUAGES = (
     ('pt', _('Portugues')),
     ('es', _('Spanish')),
 )
-#LOCALE_PATHS = (
- #   os.path.join(BASE_DIR, 'locale'),
-#)
+LOCALE_PATHS = (
+   os.path.join(BASE_DIR, 'locale'),
+)
 
 from .local_settings import *
