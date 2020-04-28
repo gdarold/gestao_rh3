@@ -1,19 +1,30 @@
-from django.http import HttpResponse
+from rest_framework import permissions
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-from apps.funcionarios.models import Funcionario
-# Create your views here.
 from django.contrib.auth.models import User, Group
 from rest_framework import viewsets
-from rest_framework import permissions
-from .serializers import UserSerializer, GroupSerializer
+from apps.core.serializers import UserSerializer, GroupSerializer
+from apps.registro_hora_extra.models import RegistroHoraExtra
 from .tasks import send_relatorio
-
+from django.db.models import Sum
+from apps.departamentos.models import Departamento
+from django.core import serializers
+from django.http import HttpResponse
 
 @login_required
 def home(request):
     data={}
     data['usuario'] = request.user
+    funcionario = request.user.funcionario
+    data['total_funcionarios'] = funcionario.empresa.total_funcionarios
+    data['total_funcionarios_ferias'] = funcionario.empresa.total_funcionarios_ferias
+    data['total_funcionarios_doc_pendente'] = funcionario.empresa.total_funcionarios_doc_pendente
+    data['total_funcionarios_doc_ok'] = funcionario.empresa.total_funcionarios_doc_ok
+    data['total_funcionarios_rg'] = 5
+    data['total_hora_extra_utilizadas'] = RegistroHoraExtra.objects.filter(
+        funcionario__empresa=funcionario.empresa, utilizada=True).aggregate(Sum('horas'))['horas__sum'] or 0
+    data['total_hora_extra_pendente'] = RegistroHoraExtra.objects.filter(
+        funcionario__empresa=funcionario.empresa, utilizada=False).aggregate(Sum('horas'))['horas__sum'] or 0
 
     return render(request, 'core/index.html', data)
 
@@ -21,6 +32,19 @@ def home(request):
 def celery(request):
     send_relatorio.delay()
     return HttpResponse('foi')
+
+
+def departamentos_ajax(request):
+    departamentos = Departamento.objects.all()
+    return render(request, 'departamentos_ajax.html', {'departamentos': departamentos})
+
+
+def filtra_funcionarios(request):
+    depart = request.GET['novo']
+    departamento = Departamento.objects.get(id=depart)
+
+    qs_json = serializers.serialize('json', departamento.funcionario_set.all())
+    return HttpResponse(qs_json, content_type='application/json')
 
 
 class UserViewSet(viewsets.ModelViewSet):

@@ -1,6 +1,7 @@
 import io
 from django.http import FileResponse, HttpResponse
 from django.views.generic.base import View, TemplateView
+from django.utils.translation import ugettext_lazy as _
 
 from reportlab.pdfgen import canvas
 from django.contrib.auth.models import User
@@ -17,6 +18,11 @@ from .models import Funcionario
 
 class FuncionarioList(ListView):
     model = Funcionario
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['report_button'] = _("Employee report")
+        return context
 
     def get_queryset(self):
         empresa_logada = self.request.user.funcionario.empresa
